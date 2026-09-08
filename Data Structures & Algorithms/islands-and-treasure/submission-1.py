@@ -1,39 +1,32 @@
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val = 0, neighbors = None):
-        self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
-"""
-
+from collections import deque
 class Solution:
-    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        # input node
-        # output node
-        # deep copy : original vs copied different entity
-        # non directed : 1->2 2->1, cycle .. 
-        # one node no neighbour [[]]
-        # no graph
+    def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+        #find the chest and the distance from the chest
+        #input grid
+        #output updated grid
 
-        if not node:
-            return None
+        rows, cols = len(grid), len(grid[0])
+        queue = deque()
+        INF = 2147483647
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 0:
+                    queue.append((r,c))
+        directions = [(-1,0), (1,0), (0,-1), (0,1)]
 
-        old_to_new = {}
-        
-        def dfs(node):
-            if node in old_to_new:
-                return old_to_new[node]
-            new_node = Node(node.val)
-            old_to_new[node] = new_node # new_node register
-
-            for neighbor in node.neighbors:
-                new_node.neighbors.append(dfs(neighbor))
+        while queue :
+            #pick and find
+            r,c = queue.popleft()
             
-            return new_node
+            for dr, dc in directions:
+                nr, nc = r+dr, c+dc
+            
+                if (0<=nr< rows and 0<=nc<cols and grid[nr][nc] == INF):
+                    grid[nr][nc] = grid[r][c]+1
+                    queue.append((nr,nc))
 
-    
-        return  dfs(node)
-        
-        
 
-        
+
+
+
+
